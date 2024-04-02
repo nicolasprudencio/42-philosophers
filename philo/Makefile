@@ -2,27 +2,28 @@ NAME	= philo
 CC		= cc
 RM		= rm -fr
 
-
-SRCS 	= main.c init.c utils.c life.c
-OBJS	= $(SRCS:%.c=%.o)
-FLAGS	= -Werror -Wextra -Wall -g
+OBJS_DIR = objects/
+OBJS_ALL = $(addprefix $(OBJS_DIR), $(SRCS:%.c=%.o))
+UTILS	= ft_atoi.c ft_atol.c ft_isdigit.c ft_isnbr.c ft_putstr.c
+UTILS	:= $(addprefix utils/, $(UTILS))
+SRCS	= main.c init.c life.c
+SRCS	+= $(UTILS)
+OBJS	:= $(addprefix $(OBJS_DIR), $(SRCS:%.c=%.o))
+CFLAGS	= -Werror -Wextra -Wall -g
 LIB		= -pthread
 
-ANSI	=	\033[0
-YELLOW	=	;33
-GREEN	=	;32
-RED		=	;31
-
-all: $(NAME)
-$(NAME): $(OBJS)
-	@$(CC) $^ $(CFLAGS) $(LIB) -o $(NAME)
+all: $(OBJS_ALL) $(NAME)
 	@printf "\033[0;1;32m%s\033[0m\n" "Philos - Compiled successfully"
 
-%.o: %.c
-	@$(CC) -c $< -o $@ $(CFLAGS)
+$(OBJS_DIR)%.o:%.c
+	@mkdir -p $(@D)
+	@$(CC) $(C_FLAGS) $(INCLUDE) -c $< -o $@
+
+$(NAME): $(OBJS_ALL)
+	@$(CC) $(C_FLAGS) $(OBJS_ALL) $(LIB) -o $@
 
 clean:
-	$(RM) *.o
+	$(RM) objects
 
 fclean: clean
 	$(RM) $(NAME)

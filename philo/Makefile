@@ -17,7 +17,7 @@ all: $(OBJS_ALL) $(NAME)
 
 $(OBJS_DIR)%.o:%.c
 	@mkdir -p $(@D)
-	@$(CC) $(C_FLAGS) $(INCLUDE) -c $< -o $@
+	@$(CC) $(C_FLAGS) -c $< -o $@
 
 $(NAME): $(OBJS_ALL)
 	@$(CC) $(C_FLAGS) $(OBJS_ALL) $(LIB) -o $@

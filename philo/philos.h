@@ -24,7 +24,8 @@ typedef struct s_philos {
 }				t_philos;
 
 typedef struct s_data {
-	pthread_mutex_t principal;
+	pthread_mutex_t m_principal;
+	pthread_mutex_t m_stop;
 	pthread_mutex_t	m_print;
 	pthread_mutex_t	m_dead;
 	pthread_t		monitor;
@@ -34,7 +35,7 @@ typedef struct s_data {
 	int				t_to_sleep;
 	int				t_to_die;
 	int				n_of_meals;
-	long int		start;
+	long int		start_time;
 	t_philos		*philos;
 }					t_data;
 
@@ -45,9 +46,12 @@ void	init_variables(t_data *data, char **argv);
 int		init_philos(t_philos *philo, t_data *data);
 int		init_threads(t_data *data, t_philos *philo);
 void	set_forks(t_philos *philo);
-void	*monitor(void *philos);
 void	*life_cycle(void *philos);
 void	take_forks(t_philos *philo);
+void	ph_eat(t_philos *philo);
+void	ph_sleep(t_philos *philo);
+void	ph_think(t_philos *philo);
+void	*monitoring(void *data_set);
 
 // UTILS
 

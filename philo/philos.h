@@ -17,7 +17,6 @@ typedef struct s_philos {
 	int				n;
 	int				last_meal;
 	int				m_counter;
-	pthread_t 		tr;
 	pthread_t		th;
 	struct s_data	*info;
 	pthread_mutex_t *fork_rt;
@@ -28,6 +27,7 @@ typedef struct s_data {
 	pthread_mutex_t principal;
 	pthread_mutex_t	m_print;
 	pthread_mutex_t	m_dead;
+	pthread_t		monitor;
 	int				n_philos;
 	int				is_dead;
 	int				t_to_eat;
@@ -43,6 +43,8 @@ typedef struct s_data {
 
 void	init_variables(t_data *data, char **argv);
 int		init_philos(t_philos *philo, t_data *data);
+int		init_threads(t_data *data, t_philos *philo);
+void	set_forks(t_philos *philo);
 void	*monitor(void *philos);
 void	*life_cycle(void *philos);
 void	take_forks(t_philos *philo);

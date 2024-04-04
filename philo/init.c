@@ -6,7 +6,7 @@
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 16:33:29 by nprudenc          #+#    #+#             */
-/*   Updated: 2024/04/04 16:27:01 by nprudenc         ###   ########.fr       */
+/*   Updated: 2024/04/04 20:32:28 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	init_threads(t_data *data, t_philos *philo)
 		if (pthread_create(&philo[i].th, NULL, &life_cycle, &philo[i]) != 0)
 			return (FALSE);
 	}
-	// if (pthread_create(&data->monitor, NULL, &monitoring, &data))
-	// 	return (FALSE);
+	if (pthread_create(&data->monitor, NULL, &monitoring, &data))
+		return (FALSE);
 	return (TRUE);
 }
 
@@ -71,12 +71,13 @@ void	init_variables(t_data *data, char **argv)
 {
 	pthread_mutex_init(&data->m_dead, NULL);
 	pthread_mutex_init(&data->m_print, NULL);
-	pthread_mutex_init(&data->principal, NULL);
+	pthread_mutex_init(&data->m_stop, NULL);
+	pthread_mutex_init(&data->m_principal, NULL);
 	data->n_philos = ft_atoi(argv[1]);
 	data->t_to_die = ft_atoi(argv[2]);
 	data->t_to_eat = ft_atoi(argv[3]);
 	data->t_to_sleep = ft_atoi(argv[4]);
-	data->start = get_time();
+	data->start_time = get_time();
 	if (argv[5])
 		data->n_of_meals = ft_atoi(argv[5]);
 	else

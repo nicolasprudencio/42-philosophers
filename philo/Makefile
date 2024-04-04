@@ -1,15 +1,15 @@
 NAME	= philo
-CC		= cc -fsanitize=thread
+CC		= cc -g -fsanitize=thread
 RM		= rm -fr
 
 OBJS_DIR = objects/
 OBJS_ALL = $(addprefix $(OBJS_DIR), $(SRCS:%.c=%.o))
 UTILS	= ft_atoi.c ft_atol.c ft_isdigit.c ft_isnbr.c ft_putstr.c utils.c
 UTILS	:= $(addprefix utils/, $(UTILS))
-SRCS	= main.c init.c life.c
+SRCS	= main.c init.c life.c monitoring.c
 SRCS	+= $(UTILS)
 OBJS	:= $(addprefix $(OBJS_DIR), $(SRCS:%.c=%.o))
-CFLAGS	= -Werror -Wextra -Wall -g
+CFLAGS	= -Werror -Wextra -Wall
 LIB		= -pthread
 
 all: $(OBJS_ALL) $(NAME)

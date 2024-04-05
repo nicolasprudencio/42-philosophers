@@ -6,7 +6,7 @@
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:46:24 by nprudenc          #+#    #+#             */
-/*   Updated: 2024/03/29 19:36:39 by nprudenc         ###   ########.fr       */
+/*   Updated: 2024/04/05 20:50:23 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,7 @@ static void	st_clean_memory(t_data *data)
 	int	i;
 
 	i = -1;
-	// while (++i < data->n_philos)
-	// {
-	// 	pthread_mutex_destroy(&data->philos->fork_lf);
-	// 	pthread_mutex_destroy(data->philos->fork_rt);
-	// }
 	free(data->philos);
-	// free(data);
 }
 
 int	validate_args(char **argv)
@@ -33,7 +27,7 @@ int	validate_args(char **argv)
 	i = 0;
 	while (argv[++i])
 	{
-		if (!ft_isnbr(argv[i]))
+		if (!ft_isnbr(argv[i]) || argv[i][0] == '-')
 		{
 			ft_putstr("Error: one of the parameters is out of the range!\n", 2);
 			printf("The parameters must have a int type");

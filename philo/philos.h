@@ -15,8 +15,8 @@
 typedef struct s_philos {
 	int				id;
 	int				n;
-	int				last_meal;
 	int				m_counter;
+	unsigned int	last_meal;
 	pthread_t		th;
 	struct s_data	*info;
 	pthread_mutex_t *fork_rt;
@@ -25,6 +25,7 @@ typedef struct s_philos {
 
 typedef struct s_data {
 	pthread_mutex_t m_principal;
+	pthread_mutex_t m_eat;
 	pthread_mutex_t m_stop;
 	pthread_mutex_t	m_print;
 	pthread_mutex_t	m_dead;

@@ -32,6 +32,6 @@ play:
 	valgrind --leak-check=full --show-leak-kinds=all ./$(NAME) 4 210 100 100 2
 
 hell:
-	valgrind --tool=helgrind ./$(NAME) 2 310 100 100 2
+	valgrind --tool=helgrind ./$(NAME) 5 800 200 200
 
 re: fclean all

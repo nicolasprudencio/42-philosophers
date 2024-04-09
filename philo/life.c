@@ -6,7 +6,7 @@
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 18:57:47 by nprudenc          #+#    #+#             */
-/*   Updated: 2024/04/05 20:47:50 by nprudenc         ###   ########.fr       */
+/*   Updated: 2024/04/09 12:31:33 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void take_forks(t_philos *philo)
 	}
 	pthread_mutex_unlock(&philo->info->m_principal);
 	pthread_mutex_lock(first_fork);
-	print(philo, "has taken first fork\n");
+	print(philo, "has taken a fork\n");
 	pthread_mutex_lock(second_fork);
-	print(philo, "has taken second fork\n");
+	print(philo, "has taken a fork\n");
 }
 
 void	ph_eat(t_philos *philo)
@@ -44,9 +44,7 @@ void	ph_eat(t_philos *philo)
 	pthread_mutex_unlock(&philo->info->m_stop);
 	ft_usleep(philo->info->t_to_eat);
 	pthread_mutex_unlock(&philo->fork_lf);
-	print(philo, "has dropped the left fork\n");
 	pthread_mutex_unlock(philo->fork_rt);
-	print(philo, "has dropped the right fork\n");
 }
 
 void	ph_sleep(t_philos *philo)
@@ -62,12 +60,12 @@ void	ph_think(t_philos *philo)
 	if (is_dead(philo, 0))
 		return ;
 	print(philo, "is thinking\n");
+	// usleep(100);
 }
 
 void	*life_cycle(void *philos)
 {
 	t_philos *philo;
-	int	i = 5;
 
 	philo = philos;
 	if (philo->id % 2 == 0)

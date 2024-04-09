@@ -6,7 +6,7 @@
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/27 17:46:24 by nprudenc          #+#    #+#             */
-/*   Updated: 2024/04/05 20:50:23 by nprudenc         ###   ########.fr       */
+/*   Updated: 2024/04/09 12:40:35 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 static void	st_clean_memory(t_data *data)
 {
-	int	i;
-
-	i = -1;
 	free(data->philos);
 }
 
@@ -59,7 +56,7 @@ int main(int argc, char *argv[])
 	}
 	if (!validate_args(argv))
 		return (1);
-	init_variables(&data, argv);	
+	init_cycle(&data, argv);
 	st_clean_memory(&data);
 	return (0);
 }

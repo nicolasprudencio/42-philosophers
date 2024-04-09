@@ -7,6 +7,7 @@
 # include <pthread.h>
 # include <sys/time.h>
 # include <string.h>
+# include <stdatomic.h>
 
 # define TRUE 1
 # define FALSE 0
@@ -31,19 +32,19 @@ typedef struct s_data {
 	pthread_mutex_t	m_dead;
 	pthread_t		monitor;
 	int				n_philos;
-	int				is_dead;
-	int				t_to_eat;
-	int				t_to_sleep;
-	int				t_to_die;
+	unsigned int	is_dead;
+	unsigned int	t_to_eat;
+	unsigned int	t_to_sleep;
+	unsigned int	t_to_die;
 	int				n_of_meals;
-	long int		start_time;
+	unsigned int	start_time;
 	t_philos		*philos;
 }					t_data;
 
 
 // SRCS
 
-void	init_variables(t_data *data, char **argv);
+void	init_cycle(t_data *data, char **argv);
 int		init_philos(t_philos *philo, t_data *data);
 int		init_threads(t_data *data, t_philos *philo);
 void	set_forks(t_philos *philo);
@@ -56,14 +57,14 @@ void	*monitoring(void *data_set);
 
 // UTILS
 
-void		ft_putstr(char *s, int fd);
-int			ft_isnbr(char	*nptr);
-int			ft_atoi(const char *nptr);
-long int	ft_atol(char *nptr);
-int			ft_isdigit(int c);
-long int	get_time(void);
-void		ft_usleep(int ms);
-int			is_dead(t_philos *philo, int	flag);
-void		print(t_philos *philo, char *s);
+void			ft_putstr(char *s, int fd);
+int				ft_isnbr(char	*nptr);
+int				ft_atoi(const char *nptr);
+long int		ft_atol(char *nptr);
+int				ft_isdigit(int c);
+unsigned int	get_time(void);
+void			ft_usleep(int ms);
+int				is_dead(t_philos *philo, int	flag);
+void			print(t_philos *philo, char *s);
 
 #endif

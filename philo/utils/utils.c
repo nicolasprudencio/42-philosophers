@@ -6,13 +6,13 @@
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:52:59 by nprudenc          #+#    #+#             */
-/*   Updated: 2024/04/05 20:48:14 by nprudenc         ###   ########.fr       */
+/*   Updated: 2024/04/08 21:54:52 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philos.h"
 
-long int	get_time(void)
+unsigned int	get_time(void)
 {
 	struct timeval	tv;
 
@@ -31,20 +31,18 @@ void	ft_usleep(int ms)
 
 void	print(t_philos *philo, char *s)
 {
-	long int	time;
-	long int	curr_time;
+	unsigned int	time;
+	unsigned int	curr_time;
 
 	pthread_mutex_lock(&philo->info->m_print);
 	time = get_time() - philo->info->start_time;
 	if (time >= 0 && time <= INT_MAX && !is_dead(philo, 0))
 	{
 		curr_time = get_time() - philo->info->start_time;
-		printf("%ld %d %s", curr_time, philo->id, s);
+		printf("%d %d %s", curr_time, philo->id, s);
 	}
 	pthread_mutex_unlock(&philo->info->m_print);
 }
-
-#include <stdatomic.h>
 
 int	is_dead(t_philos *philo, int flag)
 {

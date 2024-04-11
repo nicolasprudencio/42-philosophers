@@ -17,7 +17,7 @@ typedef struct s_philos {
 	int				id;
 	int				n;
 	int				m_counter;
-	unsigned int	last_meal;
+	long int		last_meal;
 	pthread_t		th;
 	struct s_data	*info;
 	pthread_mutex_t *fork_rt;
@@ -32,12 +32,11 @@ typedef struct s_data {
 	pthread_mutex_t	m_dead;
 	pthread_t		monitor;
 	int				n_philos;
-	unsigned int	is_dead;
-	unsigned int	t_to_eat;
-	unsigned int	t_to_sleep;
-	unsigned int	t_to_die;
+	long int		t_to_eat;
+	long int		t_to_sleep;
+	long int		t_to_die;
 	int				n_of_meals;
-	unsigned int	start_time;
+	long int		start_time;
 	t_philos		*philos;
 }					t_data;
 
@@ -46,7 +45,8 @@ typedef struct s_data {
 
 void	init_cycle(t_data *data, char **argv);
 int		init_philos(t_philos *philo, t_data *data);
-int		init_threads(t_data *data, t_philos *philo);
+int		init_threads( t_philos *philo, t_data *data);
+void	one_philo(t_philos *philo);
 void	set_forks(t_philos *philo);
 void	*life_cycle(void *philos);
 void	take_forks(t_philos *philo);
@@ -62,7 +62,7 @@ int				ft_isnbr(char	*nptr);
 int				ft_atoi(const char *nptr);
 long int		ft_atol(char *nptr);
 int				ft_isdigit(int c);
-unsigned int	get_time(void);
+long int		get_time(void);
 void			ft_usleep(int ms);
 int				is_dead(t_philos *philo, int	flag);
 void			print(t_philos *philo, char *s);

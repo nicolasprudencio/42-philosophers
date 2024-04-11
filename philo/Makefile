@@ -1,5 +1,5 @@
 NAME	= philo
-CC		= cc -g -fsanitize=thread
+CC		= cc -g
 RM		= rm -fr
 
 OBJS_DIR = objects/

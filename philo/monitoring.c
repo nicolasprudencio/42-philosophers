@@ -6,7 +6,7 @@
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/04 19:18:22 by nprudenc          #+#    #+#             */
-/*   Updated: 2024/04/09 13:17:36 by nprudenc         ###   ########.fr       */
+/*   Updated: 2024/04/11 19:52:44 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,12 @@
 
 int		check_death(t_data *data, t_philos *philo)
 {
-	unsigned int	time;
+	long int	time;
 
 	pthread_mutex_lock(&data->m_stop);
 	time = get_time() - data->start_time;
 	if (time - philo->last_meal > data->t_to_die)
-	{	
-		printf("philo ID: %i\n", philo->id);
-		printf("current time: %d\n", time);
-		printf("philo t_to_die: %d\n", data->t_to_die);
-		printf("philo t_to_eat: %d\n", data->t_to_eat);
-		printf("philo t_to_slp: %d\n", data->t_to_sleep);
-		printf("philo last_meal: %d\n", philo->last_meal);
+	{
 		is_dead(philo, TRUE);
 		pthread_mutex_unlock(&data->m_stop);
 		return (TRUE);
@@ -66,16 +60,14 @@ void	*monitoring(void *data_set)
 	philo = data->philos;
 	while(1)
 	{
-		// ft_usleep(100);
 		i = -1;
 		pthread_mutex_lock(&data->m_principal);
 		while (++i < data->n_philos)
 		{	
 			if (check_death(data, &philo[i]) == TRUE)
-			{	
-				printf("philo ID in IF: %i\n", philo[i].id);
+			{
 				pthread_mutex_lock(&philo[i].info->m_print);
-				printf("%d %d died\n", get_time() - philo->info->start_time, philo[i].id);
+				printf("%li %d died\n", get_time() - philo->info->start_time, philo[i].id);
 				pthread_mutex_unlock(&philo[i].info->m_print);
 				pthread_mutex_unlock(&data->m_principal);
 				return (NULL);

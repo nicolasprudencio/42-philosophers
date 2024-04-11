@@ -6,13 +6,13 @@
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/02 17:52:59 by nprudenc          #+#    #+#             */
-/*   Updated: 2024/04/08 21:54:52 by nprudenc         ###   ########.fr       */
+/*   Updated: 2024/04/11 19:55:08 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philos.h"
 
-unsigned int	get_time(void)
+long int	get_time(void)
 {
 	struct timeval	tv;
 
@@ -31,8 +31,8 @@ void	ft_usleep(int ms)
 
 void	print(t_philos *philo, char *s)
 {
-	unsigned int	time;
-	unsigned int	curr_time;
+	unsigned int		time;
+	unsigned int		curr_time;
 
 	pthread_mutex_lock(&philo->info->m_print);
 	time = get_time() - philo->info->start_time;
@@ -53,4 +53,14 @@ int	is_dead(t_philos *philo, int flag)
 		dead = flag;
 	pthread_mutex_unlock(&philo->info->m_dead);
 	return (dead);
+}
+
+void	one_philo(t_philos *philo)
+{
+	pthread_mutex_lock(&philo->fork_lf);
+	print(philo, "has taken a fork\n");
+	pthread_mutex_unlock(&philo->fork_lf);
+	ft_usleep(philo->info->t_to_die * 1 + 2);
+	print(philo, "died\n");
+	return ;
 }

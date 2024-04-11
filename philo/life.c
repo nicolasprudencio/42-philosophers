@@ -6,17 +6,17 @@
 /*   By: nprudenc <nprudenc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/29 18:57:47 by nprudenc          #+#    #+#             */
-/*   Updated: 2024/04/09 12:31:33 by nprudenc         ###   ########.fr       */
+/*   Updated: 2024/04/11 19:47:33 by nprudenc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philos.h"
 
-void take_forks(t_philos *philo)
+void	take_forks(t_philos *philo)
 {
-	pthread_mutex_t *first_fork;
-	pthread_mutex_t *second_fork;
-	
+	pthread_mutex_t	*first_fork;
+	pthread_mutex_t	*second_fork;
+
 	pthread_mutex_lock(&philo->info->m_principal);
 	if (philo->id % 2 != 0)
 	{
@@ -51,7 +51,7 @@ void	ph_sleep(t_philos *philo)
 {
 	if (is_dead(philo, 0))
 		return ;
-	print(philo, "is sleeping\n");	
+	print(philo, "is sleeping\n");
 	ft_usleep(philo->info->t_to_sleep);
 }
 
@@ -60,16 +60,18 @@ void	ph_think(t_philos *philo)
 	if (is_dead(philo, 0))
 		return ;
 	print(philo, "is thinking\n");
-	// usleep(100);
 }
 
 void	*life_cycle(void *philos)
 {
-	t_philos *philo;
+	t_philos	*philo;
 
 	philo = philos;
+	pthread_mutex_lock(&philo->info->m_stop);
+	philo->last_meal = get_time();
+	pthread_mutex_unlock(&philo->info->m_stop);
 	if (philo->id % 2 == 0)
-		ft_usleep(philo->info->t_to_eat / 10);
+		ft_usleep(philo->info->t_to_eat / 5);
 	while (!is_dead(philo, 0))
 	{
 		take_forks(philo);
